@@ -19,14 +19,13 @@ export function LoginCallback() {
         url: `https://oauth2.googleapis.com/token`,
         method: 'post',
         data: {
-          client_id: '774648009457-on61oomjuk44beuqaga91kf2ucbdetda.apps.googleusercontent.com',
-          client_secret: 'h84anfNsebeVcsVyXLaQd2fN',
+          client_id: process.env.REACT_APP_CLIENT_ID,
+          client_secret: process.env.REACT_APP_CLIENT_SECRET,
           redirect_uri: 'http://localhost:3000/auth/redirect',
           grant_type: 'authorization_code',
           code,
         },
       });
-      console.log(data)
 
       const { data: fetchedUserData } = await axios({
         url: 'https://www.googleapis.com/oauth2/v2/userinfo',
@@ -36,22 +35,22 @@ export function LoginCallback() {
         },
       }); 
       setUserData({...userData, email: fetchedUserData.email, name: fetchedUserData.name})
-      console.log(userData)
     }
     fetchData(code)
   }, [])
 
   async function handleSubmit() {
     const { data: { found: userExists } } = await axios.get(`http://localhost:8000/api/auth/check?username=${userData.username}`)
-    console.log(userExists)
+
     if(!userExists) {
       const { data: { token: token }} = await axios({
         url: 'http://localhost:8000/api/auth/login',
         method: 'post',
         data: userData
       })
+
       localStorage.setItem('woyl-token',token)
-      history.push('/home')
+      history.push('/dashboard')
     }
   }
   

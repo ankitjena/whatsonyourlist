@@ -19,15 +19,12 @@ router.get('/auth/check', async (req, res) => {
 })
 
 router.post('/auth/login', async (req, res) => {
-  // console.log(req.body)
   const user = new User(req.body)
   await user.save()
-  const token = await jwt.sign({
+  const token = jwt.sign({
     data: req.body,
     exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7)
   }, process.env.JWT_SECRET)
-
-  console.log(token)
 
   res.send({token: token})
 })
