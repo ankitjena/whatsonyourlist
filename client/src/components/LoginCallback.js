@@ -59,14 +59,15 @@ export function LoginCallback() {
         data: userData,
       })
 
+      // eslint-disable-next-line no-undef
       localStorage.setItem('woyl-token', token)
       history.push('/dashboard')
     }
   }
 
   return (
-    <div>
-      <label htmlFor="name">Name</label>
+    <div className="w-full max-w-xs mx-auto">
+      {/* <label htmlFor="name">Name</label>
       <input type="text" value={userData.name}></input>
       <label htmlFor="email">Email</label>
       <input type="text" value={userData.email}></input>
@@ -77,8 +78,67 @@ export function LoginCallback() {
           setUserData({ ...userData, username: e.target.value })
         }
         value={userData.username}
-      ></input>
-      <button onClick={() => handleSubmit()}>Submit</button>
+      />
+      <button onClick={() => handleSubmit()}>Submit</button> */}
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Name"
+            value={userData.name}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
+            type="text"
+            placeholder="Email"
+            value={userData.email}
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Username"
+            onChange={(e) =>
+              setUserData({ ...userData, username: e.target.value })
+            }
+            value={userData.username}
+          />
+        </div>
+        <div className="flex items-center mx-auto">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={() => handleSubmit()}
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
     </div>
   )
 }

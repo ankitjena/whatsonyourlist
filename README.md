@@ -11,3 +11,8 @@ Share your list with people easily.
 - [ ] Todo list
 
 More suggestions needed.
+
+## Features
+- Search in app and make lists, add and remove easily.
+- Share lists with friends
+- Make a list public so everyone can see it.

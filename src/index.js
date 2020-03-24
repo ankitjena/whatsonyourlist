@@ -9,15 +9,19 @@ const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+)
 
 mongoose.connect(
   'mongodb://127.0.0.1:27017/whatsonyourlist',
   (err) => {
     if (err) {
-      console.log(err)   
+      console.log(err)
     } else {
-      console.log('Connected to database')   
+      console.log('Connected to database')
     }
   },
 )
