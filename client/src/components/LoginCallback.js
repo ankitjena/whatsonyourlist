@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import * as queryString from 'query-string'
 import axios from 'axios'
+import {ActionTypes} from './actionTypes.js';
+
 
 export function LoginCallback() {
   const location = useLocation()
@@ -12,6 +14,11 @@ export function LoginCallback() {
     name: '',
     username: ''
   })
+
+  const addUser = (userData) => ({
+    type: ActionTypes.AddUSer,
+    userData
+  });
 
   useEffect(() => {
     async function fetchData(code) {
@@ -48,7 +55,7 @@ export function LoginCallback() {
         method: 'post',
         data: userData
       })
-
+      this.props.dispatch(addUser(userData))
       localStorage.setItem('woyl-token',token)
       history.push('/dashboard')
     }
