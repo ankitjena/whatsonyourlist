@@ -1,5 +1,5 @@
 import produce from "immer";
-import {ActionTypes} from "./actionTypes";
+import {ActionTypes} from "./actionTypes.js";
 
 const initialState = {
   users: {}
@@ -28,6 +28,7 @@ let idMaker = 0;
 
 export const userReducer = createReducer({
   [ActionTypes.AddUser]: (state, action) => {
+    console.log(action)
     const email = action.userData.email.trim();
     const name = action.userData.name.trim();
     const username = action.userData.username.trim();
@@ -39,5 +40,7 @@ export const userReducer = createReducer({
       name: name,
       username: username
     };
+    console.log(state.users);
   },
 });
+
