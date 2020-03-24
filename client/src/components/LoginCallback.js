@@ -7,10 +7,10 @@ export function LoginCallback() {
   const location = useLocation()
   let history = useHistory()
   const { code } = queryString.parse(location.search)
-  let [ userData, setUserData ] = useState({
+  let [userData, setUserData] = useState({
     email: '',
     name: '',
-    username: ''
+    username: '',
   })
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export function LoginCallback() {
           grant_type: 'authorization_code',
           code,
         },
-      });
+      })
 
       const { data: fetchedUserData } = await axios({
         url: 'https://www.googleapis.com/oauth2/v2/userinfo',
@@ -33,35 +33,51 @@ export function LoginCallback() {
         headers: {
           Authorization: `Bearer ${data.access_token}`,
         },
-      }); 
-      setUserData({...userData, email: fetchedUserData.email, name: fetchedUserData.name})
+      })
+      setUserData({
+        ...userData,
+        email: fetchedUserData.email,
+        name: fetchedUserData.name,
+      })
     }
     fetchData(code)
   }, [])
 
   async function handleSubmit() {
-    const { data: { found: userExists } } = await axios.get(`http://localhost:8000/api/auth/check?username=${userData.username}`)
+    const {
+      data: { found: userExists },
+    } = await axios.get(
+      `http://localhost:8000/api/auth/check?username=${userData.username}`,
+    )
 
-    if(!userExists) {
-      const { data: { token: token }} = await axios({
+    if (!userExists) {
+      const {
+        data: { token: token },
+      } = await axios({
         url: 'http://localhost:8000/api/auth/login',
         method: 'post',
-        data: userData
+        data: userData,
       })
 
-      localStorage.setItem('woyl-token',token)
+      localStorage.setItem('woyl-token', token)
       history.push('/dashboard')
     }
   }
-  
+
   return (
     <div>
-      <label for='name'>Name</label>
-      <input type='text' value={userData.name}></input>
-      <label for='email'>Email</label>
-      <input type='text' value={userData.email}></input>
-      <label for='username'>Username</label>
-      <input type='text' onChange={(e) => setUserData({...userData, username: e.target.value})} value={userData.username}></input>
+      <label htmlFor="name">Name</label>
+      <input type="text" value={userData.name}></input>
+      <label htmlFor="email">Email</label>
+      <input type="text" value={userData.email}></input>
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        onChange={(e) =>
+          setUserData({ ...userData, username: e.target.value })
+        }
+        value={userData.username}
+      ></input>
       <button onClick={() => handleSubmit()}>Submit</button>
     </div>
   )
