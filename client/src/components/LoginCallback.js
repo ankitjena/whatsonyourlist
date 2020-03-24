@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
-import * as queryString from 'query-string';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'
+import { useLocation, useHistory } from 'react-router-dom'
+import * as queryString from 'query-string'
+import axios from 'axios'
 
 export function LoginCallback() {
-  const location = useLocation();
-  let history = useHistory();
-  const { code } = queryString.parse(location.search);
+  const location = useLocation()
+  let history = useHistory()
+  const { code } = queryString.parse(location.search)
   let [userData, setUserData] = useState({
     email: '',
     name: '',
     username: '',
-  });
+  })
 
   useEffect(() => {
     async function fetchData(code) {
@@ -25,7 +25,7 @@ export function LoginCallback() {
           grant_type: 'authorization_code',
           code,
         },
-      });
+      })
 
       const { data: fetchedUserData } = await axios({
         url: 'https://www.googleapis.com/oauth2/v2/userinfo',
@@ -33,22 +33,22 @@ export function LoginCallback() {
         headers: {
           Authorization: `Bearer ${data.access_token}`,
         },
-      });
+      })
       setUserData({
         ...userData,
         email: fetchedUserData.email,
         name: fetchedUserData.name,
-      });
+      })
     }
-    fetchData(code);
-  }, []);
+    fetchData(code)
+  }, [])
 
   async function handleSubmit() {
     const {
       data: { found: userExists },
     } = await axios.get(
       `http://localhost:8000/api/auth/check?username=${userData.username}`,
-    );
+    )
 
     if (!userExists) {
       const {
@@ -57,10 +57,10 @@ export function LoginCallback() {
         url: 'http://localhost:8000/api/auth/login',
         method: 'post',
         data: userData,
-      });
+      })
 
-      localStorage.setItem('woyl-token', token);
-      history.push('/dashboard');
+      localStorage.setItem('woyl-token', token)
+      history.push('/dashboard')
     }
   }
 
@@ -80,5 +80,5 @@ export function LoginCallback() {
       ></input>
       <button onClick={() => handleSubmit()}>Submit</button>
     </div>
-  );
+  )
 }

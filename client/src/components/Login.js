@@ -1,5 +1,5 @@
-import * as queryString from 'query-string';
-import React from 'react';
+import * as queryString from 'query-string'
+import React from 'react'
 
 const stringifiedParams = queryString.stringify({
   client_id: process.env.REACT_APP_CLIENT_ID,
@@ -11,17 +11,17 @@ const stringifiedParams = queryString.stringify({
   response_type: 'code',
   access_type: 'offline',
   prompt: 'consent',
-});
+})
 
-const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`;
+const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
 
 export function Login() {
-  console.log(process.env.REACT_APP_CLIENT_ID);
+  console.log(process.env.REACT_APP_CLIENT_ID)
   return (
     <div>
       <button>
         <a href={googleLoginUrl}>Login to google</a>
       </button>
     </div>
-  );
+  )
 }
