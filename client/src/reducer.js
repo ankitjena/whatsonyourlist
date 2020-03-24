@@ -40,7 +40,7 @@ export const userReducer = createReducer({
       name: name,
       username: username
     };
-    console.log(state.users);
+    console.log(state.users[nextId]);
   },
 });
 
