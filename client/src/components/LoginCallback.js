@@ -13,7 +13,7 @@ export function LoginCallback() {
   let [userData, setUserData] = useState({
     email: '',
     name: '',
-    username: ''
+    username: '',
   })
   let dispatch = useDispatch()
   // const addUser = (userData) => ();
@@ -30,7 +30,7 @@ export function LoginCallback() {
           grant_type: 'authorization_code',
           code,
         },
-      });
+      })
 
       const { data: fetchedUserData } = await axios({
         url: 'https://www.googleapis.com/oauth2/v2/userinfo',
@@ -38,23 +38,32 @@ export function LoginCallback() {
         headers: {
           Authorization: `Bearer ${data.access_token}`,
         },
-      });
-      setUserData({ ...userData, email: fetchedUserData.email, name: fetchedUserData.name })
+      })
+      setUserData({
+        ...userData,
+        email: fetchedUserData.email,
+        name: fetchedUserData.name,
+      })
     }
     fetchData(code)
   }, [])
 
   async function handleSubmit() {
-    const { data: { found: userExists } } = await axios.get(`http://localhost:8000/api/auth/check?username=${userData.username}`)
-    console.log(userData)
+    const {
+      data: { found: userExists },
+    } = await axios.get(
+      `http://localhost:8000/api/auth/check?username=${userData.username}`,
+    )
     if (!userExists) {
-      const { data: { token: token } } = await axios({
+      const {
+        data: { token: token },
+      } = await axios({
         url: 'http://localhost:8000/api/auth/login',
         method: 'post',
-        data: userData
+        data: userData,
       })
       dispatch({
-        type: ActionTypes.AddUser,
+        type:ActionTypes.AddUser,
         userData
       })
       localStorage.setItem('woyl-token', token)
@@ -63,14 +72,79 @@ export function LoginCallback() {
   }
 
   return (
-    <div>
-      <label for='name'>Name</label>
-      <input type='text' value={userData.name}></input>
-      <label for='email'>Email</label>
-      <input type='text' value={userData.email}></input>
-      <label for='username'>Username</label>
-      <input type='text' onChange={(e) => setUserData({ ...userData, username: e.target.value })} value={userData.username}></input>
-      <button onClick={() => handleSubmit()}>Submit</button>
+    <div className="w-full max-w-xs mx-auto">
+      {/* <label htmlFor="name">Name</label>
+      <input type="text" value={userData.name}></input>
+      <label htmlFor="email">Email</label>
+      <input type="text" value={userData.email}></input>
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        onChange={(e) =>
+          setUserData({ ...userData, username: e.target.value })
+        }
+        value={userData.username}
+      />
+      <button onClick={() => handleSubmit()}>Submit</button> */}
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Name
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="name"
+            type="text"
+            placeholder="Name"
+            value={userData.name}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="name"
+          >
+            Email
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="email"
+            type="text"
+            placeholder="Email"
+            value={userData.email}
+          />
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username"
+            type="text"
+            placeholder="Username"
+            onChange={(e) =>
+              setUserData({ ...userData, username: e.target.value })
+            }
+            value={userData.username}
+          />
+        </div>
+        <div className="flex items-center mx-auto">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button"
+            onClick={() => handleSubmit()}
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
     </div>
   )
 }
