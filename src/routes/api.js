@@ -29,7 +29,7 @@ router.post('/auth/login', async (req, res) => {
     process.env.JWT_SECRET,
   )
 
-  res.send({ token: token })
+  res.send({ token: token, user: user })
 })
 
 export default router

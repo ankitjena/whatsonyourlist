@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import * as queryString from 'query-string'
 import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { login } from './actions.js'
 
 export function LoginCallback() {
   const location = useLocation()
@@ -12,6 +14,7 @@ export function LoginCallback() {
     name: '',
     username: '',
   })
+  let dispatch = useDispatch()
 
   useEffect(() => {
     async function fetchData(code) {
@@ -49,37 +52,20 @@ export function LoginCallback() {
     } = await axios.get(
       `http://localhost:8000/api/auth/check?username=${userData.username}`,
     )
-
     if (!userExists) {
-      const {
-        data: { token: token },
-      } = await axios({
+      const { data } = await axios({
         url: 'http://localhost:8000/api/auth/login',
         method: 'post',
         data: userData,
       })
-
-      // eslint-disable-next-line no-undef
-      localStorage.setItem('woyl-token', token)
+      localStorage.setItem('woyl-token', data.token)
+      dispatch(login(data.user))
       history.push('/dashboard')
     }
   }
 
   return (
     <div className="w-full max-w-xs mx-auto">
-      {/* <label htmlFor="name">Name</label>
-      <input type="text" value={userData.name}></input>
-      <label htmlFor="email">Email</label>
-      <input type="text" value={userData.email}></input>
-      <label htmlFor="username">Username</label>
-      <input
-        type="text"
-        onChange={(e) =>
-          setUserData({ ...userData, username: e.target.value })
-        }
-        value={userData.username}
-      />
-      <button onClick={() => handleSubmit()}>Submit</button> */}
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label
