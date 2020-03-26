@@ -5,7 +5,6 @@ import { ApolloServer } from 'apollo-server-express'
 import apiRouter from './routes/api'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
-
 import { graphqlSchema } from './graphql/schema'
 
 const app = express()
@@ -30,7 +29,6 @@ mongoose.connect(
 )
 
 const server = new ApolloServer({ schema: graphqlSchema })
-
 server.applyMiddleware({ app, path: '/graphql' })
 
 app.get('/', (req, res) => {
