@@ -5,7 +5,8 @@ import { ApolloServer } from 'apollo-server-express'
 import apiRouter from './routes/api'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
-import { prepare } from './utils/index'
+
+import { graphqlSchema } from './graphql/schema'
 
 const app = express()
 
@@ -28,44 +29,7 @@ mongoose.connect(
   },
 )
 
-var db = mongoose.connection
-
-const Users = db.collection('users')
-
-const typeDefs = [
-  `
-  type Query {
-    user(_id: String): User
-    users: [User]
-  }
-
-  type User {
-    _id: String,
-    email: String,
-    name: String,
-    username: String
-  }
-`,
-]
-
-const resolvers = {
-  Query: {
-    user: async (root, { _id }) => {
-      return prepare(
-        await Users.findOne(mongoose.mongo.ObjectID(_id)),
-      )
-    },
-
-    users: async () => {
-      return (await Users.find({}).toArray()).map(prepare)
-    },
-  },
-}
-
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-})
+const server = new ApolloServer({ schema: graphqlSchema })
 
 server.applyMiddleware({ app, path: '/graphql' })
 
