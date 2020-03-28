@@ -1,9 +1,16 @@
 import 'dotenv/config'
 import cors from 'cors'
 import express from 'express'
+import {
+  ApolloServer,
+  makeExecutableSchema,
+} from 'apollo-server-express'
 import apiRouter from './routes/api'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+
+import { schemaResolvers } from './resolvers'
+import { typeDefs } from './schema'
 
 const app = express()
 
@@ -25,6 +32,14 @@ mongoose.connect(
     }
   },
 )
+
+const graphqlSchema = makeExecutableSchema({
+  typeDefs: typeDefs,
+  resolvers: schemaResolvers,
+})
+
+const server = new ApolloServer({ schema: graphqlSchema })
+server.applyMiddleware({ app, path: '/graphql' })
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
