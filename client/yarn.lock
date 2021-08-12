@@ -6393,6 +6393,11 @@ jsx-ast-utils@^2.2.1, jsx-ast-utils@^2.2.3:
     array-includes "^3.0.3"
     object.assign "^4.1.0"
 
+keymirror@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+  integrity sha1-kYiJ6hP40KQufFVyUO7nE63JXDU=
+
 killable@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/killable/-/killable-1.0.1.tgz#4c8ce441187a061c7474fb87ca08e2a638194892"
@@ -7628,9 +7633,9 @@ path-key@^3.1.0:
   integrity sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==
 
 path-parse@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
-  integrity sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
+  integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
 path-to-regexp@0.1.7:
   version "0.1.7"
@@ -9043,6 +9048,14 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
+reduce-css-calc@^2.1.6:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/reduce-css-calc/-/reduce-css-calc-2.1.7.tgz#1ace2e02c286d78abcd01fd92bfe8097ab0602c2"
+  integrity sha512-fDnlZ+AybAS3C7Q9xDq5y8A2z+lT63zLbynew/lur/IR24OQF5x98tfNwf79mzEdfywZ0a2wpM860FhFfMxZlA==
+  dependencies:
+    css-unit-converter "^1.1.1"
+    postcss-value-parser "^3.3.0"
+
 redux-devtools-extension@^2.13.8:
   version "2.13.8"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
@@ -9060,13 +9073,6 @@ redux@^4.0.5:
   dependencies:
     loose-envify "^1.4.0"
     symbol-observable "^1.2.0"
-reduce-css-calc@^2.1.6:
-  version "2.1.7"
-  resolved "https://registry.yarnpkg.com/reduce-css-calc/-/reduce-css-calc-2.1.7.tgz#1ace2e02c286d78abcd01fd92bfe8097ab0602c2"
-  integrity sha512-fDnlZ+AybAS3C7Q9xDq5y8A2z+lT63zLbynew/lur/IR24OQF5x98tfNwf79mzEdfywZ0a2wpM860FhFfMxZlA==
-  dependencies:
-    css-unit-converter "^1.1.1"
-    postcss-value-parser "^3.3.0"
 
 regenerate-unicode-properties@^8.2.0:
   version "8.2.0"
